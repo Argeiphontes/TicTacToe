@@ -22,10 +22,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelNine;
 @property (strong, nonatomic) IBOutlet UILabel *whichPlayerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timerLabel;
+@property BOOL playerTurn;
+@property BOOL alreadyPlayed;
+@property NSArray *validMove;
 
 
 @property NSString *lastMove;
-@property NSArray *labelFrames;
 @property NSArray *allLabels;
 @property int timeAmount;
 @property NSTimer *gameTimer;
@@ -47,10 +49,13 @@
 
     self.whichPlayerLabel.text = @"X";
     self.whichPlayerLabel.textColor = [UIColor blueColor];
+    self.timerLabel.text = @"10";
+    self.playerTurn = 0;
 
-    self.labelFrames =  [NSArray arrayWithObjects: NSStringFromCGRect(self.labelOne.frame), NSStringFromCGRect(self.labelTwo.frame), NSStringFromCGRect([self.labelThree frame]), NSStringFromCGRect(self.labelFour.frame), NSStringFromCGRect(self.labelFive.frame), NSStringFromCGRect(self.labelSix.frame), NSStringFromCGRect(self.labelSeven.frame), NSStringFromCGRect(self.labelEight.frame), NSStringFromCGRect(self.labelNine.frame), nil];
 
     self.allLabels = [NSArray arrayWithObjects:self.labelOne, self.labelTwo, self.labelThree, self.labelFour, self.labelFive, self.labelSix, self.labelSeven, self.labelEight, self.labelNine, nil];
+
+    NSArray *validMove = [NSArray 0, 0, 0, 0, 0, 0, 0, 0, 0, nil];
 
     NSArray *rowOne = [NSArray arrayWithObjects:self.labelOne, self.labelTwo, self.labelThree, nil];
     NSArray *rowTwo = [NSArray arrayWithObjects:self.labelFour, self.labelFive, self.labelSix, nil];
@@ -67,64 +72,36 @@
 
 }
 
-// Deterimine where user taps
+
 -(UILabel *)findLabelUsingPoint: (CGPoint)point {
-    for (NSString *cgRect in self.labelFrames) {
-        if(CGRectContainsPoint(CGRectFromString(cgRect), point)) {
-            for (UILabel *label in self.allLabels) {
-                if(CGRectEqualToRect([label frame], CGRectFromString(cgRect))) {
-                    return label;  }
-}
-}
-}
+    for (UILabel *label in self.allLabels) {
+        if(CGRectContainsPoint(label.frame, point)) {
+            return label;
+        }
+    }
     return nil;
 }
-    
 
 - (IBAction)onLabelTapped:(UITapGestureRecognizer *)userTap {
     CGPoint point = [userTap locationInView:self.view];
-    UILabel *tapInLabel = [self findLabelUsingPoint:point];
-    if (tapInLabel) {
-        tapInLabel.text = @"X";
-        tapInLabel.textColor = [UIColor blueColor];
+    UILabel *tappedLabel = [self findLabelUsingPoint:point];
+    if (tappedLabel) {
+        if (self.tappedlabel [tag] == 0) {
+            if (self.playerTurn == 0) {
+                tappedLabel.text = @"X";
+                tappedLabel.textColor = [UIColor blueColor];
+                self.whichPlayerLabel.text = @"Your turn O";
+            }
+            else {
+                tappedLabel.text = @"O";
+                tappedLabel.textColor = [UIColor redColor];
+                self.whichPlayerLabel.text = @"Your turn X";
+            }
+            self.playerTurn = !self.playerTurn;
+            self.validMove[] = 1;
+            
+        }
     }
 }
-
-
-//- (IBAction)onLabelTapped:(UITapGestureRecognizer *)userTap
-//{
-//    CGPoint point = [userTap locationInView:self.view];
-//    UILabel *tapInLabel = [self findLabelUsingPoint:point];
-//    if (tapInLabel) {
-//        self.twoHumanMovesAgo = self.humanMove;
-//        tapInLabel.text = @"X";
-//        tapInLabel.textColor = [UIColor blueColor];
-//        self.humanMove = tapInLabel;
-//
-//    }
-//}
-
-
-
-
-//-(IBAction)onDrag:(UIPanGestureRecognizer *) panGesture {
-//    CGPoint point = [panGesture locationInView:self.view];
-//    self.theFuture.center = point;
-//
-//    if (panGesture.state == UIGestureRecognizerStateEnded) {
-//        [UIView animateWithDuration:1.0 animations:^{
-//            self.theFuture.center = self.originalCenter;
-//            self.theFuture.backgroundColor = [UIColor greenColor];
-//
-//        }];
-//    }
-//
-//    if (CGRectContainsPoint(self.thePreCogs.frame, point)) {
-//        self.theFuture.backgroundColor = [UIColor orangeColor];
-//        self.theFuture.text = @"A Fictitious and Incriminating Future";
-//        [self.theFuture sizeToFit];
-//    }
-
-
 
 @end
