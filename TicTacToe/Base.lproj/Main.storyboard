@@ -126,6 +126,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.25098040699958801" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="2jK-Dg-LUG" secondAttribute="centerX" id="2ID-6i-RJg"/>
                             <constraint firstItem="GOh-3o-pqk" firstAttribute="leading" secondItem="t9k-DN-2vU" secondAttribute="trailing" constant="13" id="3XB-C5-yU2"/>
@@ -146,6 +147,9 @@
                             <constraint firstAttribute="centerY" secondItem="GOh-3o-pqk" secondAttribute="centerY" id="zEr-8h-xz2"/>
                             <constraint firstAttribute="centerY" secondItem="uXc-AL-WA2" secondAttribute="centerY" id="zi8-us-K7L"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="VMH-2T-wt6" appends="YES" id="PL7-cj-mZE"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="labelEight" destination="gPX-9C-Dew" id="ev2-Aq-9SZ"/>
@@ -161,6 +165,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="VMH-2T-wt6">
+                    <connections>
+                        <action selector="onLabelTapped:" destination="vXZ-lx-hvc" id="oKd-LX-A0s"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="302" y="178"/>
         </scene>

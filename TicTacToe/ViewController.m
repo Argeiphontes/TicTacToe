@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+
+// Ruggles Tic Tac Toe
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UIView *labelOne;
 @property (strong, nonatomic) IBOutlet UILabel *labelTwo;
@@ -19,22 +21,65 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelEight;
 @property (strong, nonatomic) IBOutlet UILabel *labelNine;
 @property (strong, nonatomic) IBOutlet UILabel *whichPlayerLabel;
+@property NSString *lastMove;
+@property NSArray *labelFrames;
+@property NSArray *allLabels;
+@property (strong, nonatomic) IBOutlet UILabel *timerLabel;
+@property int timeAmount;
+@property NSTimer *gameTimer;
+@property CGPoint gamePieceOriginalCenter;
+@property NSArray *columnsAndRows;
 
 @end
 
+
+// Ruggles Tic Tac Toe
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    self.whichPlayerLabel.text = @"X";
+    self.whichPlayerLabel.textColor = [UIColor blueColor];
+
+    self.labelFrames =  [NSArray arrayWithObjects: NSStringFromCGRect(self.labelOne.frame), NSStringFromCGRect(self.labelTwo.frame), NSStringFromCGRect([self.labelThree frame]), NSStringFromCGRect(self.labelFour.frame), NSStringFromCGRect(self.labelFive.frame), NSStringFromCGRect(self.labelSix.frame), NSStringFromCGRect(self.labelSeven.frame), NSStringFromCGRect(self.labelEight.frame), NSStringFromCGRect(self.labelNine.frame), nil];
+
+    self.allLabels = [NSArray arrayWithObjects:self.labelOne, self.labelTwo, self.labelThree, self.labelFour, self.labelFive, self.labelSix, self.labelSeven, self.labelEight, self.labelNine, nil];
+
+    NSArray *rowOne = [NSArray arrayWithObjects:self.labelOne, self.labelTwo, self.labelThree, nil];
+    NSArray *rowTwo = [NSArray arrayWithObjects:self.labelFour, self.labelFive, self.labelSix, nil];
+    NSArray *rowThree = [NSArray arrayWithObjects:self.labelSeven, self.labelEight, self.labelNine, nil];
+    NSArray *columnOne = [NSArray arrayWithObjects:self.labelOne, self.labelFour, self.labelSeven, nil];
+    NSArray *columnTwo = [NSArray arrayWithObjects:self.labelTwo, self.labelFive, self.labelEight, nil];
+    NSArray *columnThree = [NSArray arrayWithObjects:self.labelThree, self.labelSix, self.labelNine, nil];
+    NSArray *diagonalLeft = [NSArray arrayWithObjects:self.labelOne, self.labelFive, self.labelNine, nil];
+    NSArray *diagonalRight = [NSArray arrayWithObjects:self.labelThree, self.labelFive, self.labelSeven, nil];
+
+    self.columnsAndRows = [NSArray arrayWithObjects:rowOne, rowTwo, rowThree, columnOne, columnTwo, columnThree, diagonalLeft, diagonalRight,  nil];
+
+    self.gamePieceOriginalCenter = self.whichPlayerLabel.center;
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-- (IBAction)findLabelUsing:(id)sender
+-(UILabel *)findLabelUsingPoint: (CGPoint)point {
+    for (NSString *cgRect in self.labelFrames) {
+        if(CGRectContainsPoint(CGRectFromString(cgRect), point)) {
+            for (UILabel *label in self.allLabels) {
+                if(CGRectEqualToRect([label frame], CGRectFromString(cgRect))) {
+                    return label;
+                }
+            }
+        }
+    }
+    return nil;
+}
+    
+
+- (IBAction)onLabelTapped:(id)sender {
+
+
+}
 
 
 //-(IBAction)onDrag:(UIPanGestureRecognizer *) panGesture {
