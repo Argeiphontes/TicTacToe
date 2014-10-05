@@ -10,8 +10,8 @@
 
 
 // Ruggles Tic Tac Toe
-@interface ViewController ()
-@property (strong, nonatomic) IBOutlet UIView *labelOne;
+@interface ViewController () <UIAlertViewDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *labelOne;
 @property (strong, nonatomic) IBOutlet UILabel *labelTwo;
 @property (strong, nonatomic) IBOutlet UILabel *labelThree;
 @property (strong, nonatomic) IBOutlet UILabel *labelFour;
@@ -21,14 +21,20 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelEight;
 @property (strong, nonatomic) IBOutlet UILabel *labelNine;
 @property (strong, nonatomic) IBOutlet UILabel *whichPlayerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timerLabel;
+
+
 @property NSString *lastMove;
 @property NSArray *labelFrames;
 @property NSArray *allLabels;
-@property (strong, nonatomic) IBOutlet UILabel *timerLabel;
 @property int timeAmount;
 @property NSTimer *gameTimer;
 @property CGPoint gamePieceOriginalCenter;
 @property NSArray *columnsAndRows;
+@property UILabel *humanMove;
+@property UILabel *twoHumanMovesAgo;
+@property int moveNumber;
+@property CGRect originalPosition;
 
 @end
 
@@ -61,25 +67,44 @@
 
 }
 
-
+// Deterimine where user taps
 -(UILabel *)findLabelUsingPoint: (CGPoint)point {
     for (NSString *cgRect in self.labelFrames) {
         if(CGRectContainsPoint(CGRectFromString(cgRect), point)) {
             for (UILabel *label in self.allLabels) {
                 if(CGRectEqualToRect([label frame], CGRectFromString(cgRect))) {
-                    return label;
-                }
-            }
-        }
-    }
+                    return label;  }
+}
+}
+}
     return nil;
 }
     
 
-- (IBAction)onLabelTapped:(id)sender {
-
-
+- (IBAction)onLabelTapped:(UITapGestureRecognizer *)userTap {
+    CGPoint point = [userTap locationInView:self.view];
+    UILabel *tapInLabel = [self findLabelUsingPoint:point];
+    if (tapInLabel) {
+        tapInLabel.text = @"X";
+        tapInLabel.textColor = [UIColor blueColor];
+    }
 }
+
+
+//- (IBAction)onLabelTapped:(UITapGestureRecognizer *)userTap
+//{
+//    CGPoint point = [userTap locationInView:self.view];
+//    UILabel *tapInLabel = [self findLabelUsingPoint:point];
+//    if (tapInLabel) {
+//        self.twoHumanMovesAgo = self.humanMove;
+//        tapInLabel.text = @"X";
+//        tapInLabel.textColor = [UIColor blueColor];
+//        self.humanMove = tapInLabel;
+//
+//    }
+//}
+
+
 
 
 //-(IBAction)onDrag:(UIPanGestureRecognizer *) panGesture {
@@ -99,7 +124,7 @@
 //        self.theFuture.text = @"A Fictitious and Incriminating Future";
 //        [self.theFuture sizeToFit];
 //    }
-}
+
 
 
 @end
